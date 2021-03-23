@@ -28,10 +28,10 @@ def verify_signature(req, secret) -> bool:
 def update_containers(containers) -> None:
     # start watchtower container
     client.containers.run(
-        image = 'containrrr/watchtower',
-        command = ' '.join(containers),
-        detach = True,
-        volumes = {'/var/run/docker.sock': {'bind': '/var/run/docker.sock', 'mode': 'rw'}}
+        image='containrrr/watchtower',
+        command=' '.join(containers),
+        detach=True,
+        volumes={'/var/run/docker.sock': {'bind': '/var/run/docker.sock', 'mode': 'rw'}}
         )
 
 
