@@ -62,7 +62,7 @@ if __name__ == '__main__':
     # create docker client
     try:
         client = docker.from_env()
-    except docker.errors.DockerException:
+    except docker.errors.DockerException as e:
         logging.error(f'Error: could not create docker client - {e}')
     # create webhook server
     serve(app, host='0.0.0.0', port=8888)
