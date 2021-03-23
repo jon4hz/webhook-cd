@@ -12,7 +12,7 @@ from flask import Flask, request, abort
 
 app = Flask(__name__)
 
-@app.route('/webhooks/optimizely', methods=['POST'])
+@app.route('/webhooks/containers', methods=['POST'])
 def index():
     request_signature = request.headers.get('X-Hub-Signature')
 
