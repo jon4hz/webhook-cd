@@ -4,11 +4,18 @@
 # Date: 24.03.2021
 # Desc: Webhook for cd
 ###################################################################################################
-from hashlib import sha1
-import hmac
-import docker
-from flask import Flask, request
-from waitress import serve
+try:
+    from hashlib import sha1
+    import hmac
+    import docker
+    import importlib
+    from flask import Flask, request
+    from waitress import serve
+    import config
+except ImportError as e:
+    print(f'Error: could not import all modules - {e}')
+    exit()
+
 
 app = Flask(__name__)
 
@@ -39,9 +46,9 @@ def update_containers(containers) -> None:
 def main():
     if request.method == 'POST':
         try:
-            import config
-        except ImportError:
-            exit()
+            importlib.reload(config)
+        except Exception as e:
+            print(f'Error: Could not reload config - {e}')
         if verify_signature(request, config.WEBHOOK_SECRET):
             update_containers(config.DOCKER_CONTAINERS)
             print(config.DOCKER_CONTAINERS)
