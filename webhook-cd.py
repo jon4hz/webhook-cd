@@ -15,11 +15,14 @@ app = Flask(__name__)
 
 
 def verify_signature(req, secret):
-    received_sign = req.headers.get('X-Hub-Signature').split('sha1=')[-1].strip()
-    secret = 'my_secret_string'.encode()
-    expected_sign = hmac.HMAC(key=secret, msg=req.data, digestmod=sha1).hexdigest()
-    return hmac.compare_digest(received_sign, expected_sign)
-
+    try:
+        received_sign = req.headers.get('X-Hub-Signature').split('sha1=')[-1].strip()
+        secret = secret.encode()
+        expected_sign = hmac.HMAC(key=secret, msg=req.data, digestmod=sha1).hexdigest()
+        return hmac.compare_digest(received_sign, expected_sign)
+    except Exception as e:
+        print(e)
+        return False
 
 @app.route('/webhooks/containers', methods=['POST'])
 def main():
