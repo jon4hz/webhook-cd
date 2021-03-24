@@ -80,7 +80,7 @@ def get_containers(container_names):
 
 def remove_container(container):
     try:
-        container.stop()
+        container.remove()
     except docker.errors.APIError as e:
         logging.error(e)
 
