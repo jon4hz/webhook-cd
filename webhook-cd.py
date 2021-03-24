@@ -153,8 +153,10 @@ def main():
         except Exception as e:
             logging.error(f'Could not reload config - {e}')
         if verify_signature(request, config.WEBHOOK_SECRET):
-            recreate_containers(config.DOCKER_CONTAINERS)
-            print(config.DOCKER_CONTAINERS)
+            try:
+                recreate_containers(config.DOCKER_CONTAINERS)
+            except Exception as e:
+                logging.error(e)
             return 'Success', 200
         return 'Forbidden', 403
     return 'Not allowed', 405
