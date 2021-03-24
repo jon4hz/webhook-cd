@@ -39,7 +39,7 @@ def verify_signature(req, secret) -> bool:
 
 
 def update_containers(containers) -> None:
-    command = f'--run-once {' '.join(containers)}'
+    command = f'--run-once {" ".join(containers)}'
     # start watchtower container
     client.containers.run(
         image='containrrr/watchtower',
