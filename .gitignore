@@ -5,3 +5,6 @@ __pycache__
 
 # vscode
 .vscode
+
+# tests
+test.py
