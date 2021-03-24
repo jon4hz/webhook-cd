@@ -4,7 +4,12 @@
 # Date: 24.03.2021
 # Desc: Webhook for cd
 ###################################################################################################
+# loggging
 import logging
+logging.basicConfig(level=logging.INFO,
+                    format="{asctime} [{levelname:8}] {process} {thread} {module}: {message}",
+                    style="{")
+
 try:
     from hashlib import sha1
     import hmac
@@ -14,7 +19,7 @@ try:
     from waitress import serve
     import config
 except ImportError as e:
-    logging.error(f'Error: could not import all modules - {e}')
+    logging.error(f'Could not import all modules - {e}')
     exit()
 
 
@@ -49,7 +54,7 @@ def main():
         try:
             importlib.reload(config)
         except Exception as e:
-            logging.error(f'Error: Could not reload config - {e}')
+            logging.error(f'Could not reload config - {e}')
         if verify_signature(request, config.WEBHOOK_SECRET):
             update_containers(config.DOCKER_CONTAINERS)
             print(config.DOCKER_CONTAINERS)
@@ -63,6 +68,6 @@ if __name__ == '__main__':
     try:
         client = docker.from_env()
     except docker.errors.DockerException as e:
-        logging.error(f'Error: could not create docker client - {e}')
+        logging.error(f'Could not create docker client - {e}')
     # create webhook server
     serve(app, host='0.0.0.0', port=8888)
