@@ -9,3 +9,5 @@ This is a simple webhook server, written in python. Once the webhook is triggere
 * Create systemd service
 * Create config file
 * Enable & start systemd service
+
+*Better instructions **might** follow soon*
